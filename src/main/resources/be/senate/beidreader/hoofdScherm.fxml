@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane id="filechooserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.senate.beidreader.controller.HoofdSchermController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="252.0" minHeight="252.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <MenuBar prefHeight="25.0" prefWidth="208.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem fx:id="newButton" mnemonicParsing="false" text="New" />
+                        <MenuItem fx:id="openButton" mnemonicParsing="false" text="Open" />
+                        <MenuItem fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                        <MenuItem fx:id="saveAsButton" mnemonicParsing="false" text="Save As" />
+                    <MenuItem fx:id="closeButton" mnemonicParsing="false" text="Close" />
+                        <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#exitApplication" text="Exit" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#startFileChooser" text="..." GridPane.columnIndex="2" />
+            <TextField fx:id="filePathTextField" editable="false" text="c:\home\wv\namen.csv" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <ListView editable="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+      <GridPane GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="255.0" minHeight="100.0" prefHeight="255.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="pasfotoImageView" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D height="250.0" width="197.0" />
+               </viewport>
+            </ImageView>
+            <GridPane maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="RRN:" />
+                  <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Naam" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Voornamen:" GridPane.rowIndex="2" />
+                  <TextField fx:id="rrnTextField" editable="false" GridPane.columnIndex="1" />
+                  <TextField fx:id="naamTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="voornamenTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+      <GridPane GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="upButton" disable="true" mnemonicParsing="false" onAction="#upButtonPushed" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Button fx:id="downButton" disable="true" mnemonicParsing="false" onAction="#downButtonPushed" text="Down" GridPane.halignment="CENTER" />
+         </children>
+      </GridPane>
+   </children>
+</GridPane>

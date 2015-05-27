@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.senate.beidreader.oudHoofdSchermController">
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <children>
+      <Button fx:id="visueleKnop" mnemonicParsing="false" onAction="#visueleKnopIngedrukt" text="Visuele Knop" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="boodschapLabel" prefHeight="17.0" prefWidth="94.0" text="Nog niets" GridPane.rowIndex="2" />
+      <TextField fx:id="boodschapTextField" promptText="Vul noodschap in" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="tellerLabel" text="0" GridPane.columnIndex="1" />
+   </children>
+</GridPane>
