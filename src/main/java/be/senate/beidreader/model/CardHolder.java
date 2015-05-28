@@ -13,6 +13,7 @@ import be.belgium.eid.objects.IDPhoto;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.Objects;
 
 
 /**
@@ -291,5 +292,12 @@ public class CardHolder {
                 "," + "\"" + sexe + "\"";
         return csvString;
     }
+
+    @Override
+    public String toString() {
+        return regNr + " " + lastName + " " + firstName;
+    }
+
+
 }
 

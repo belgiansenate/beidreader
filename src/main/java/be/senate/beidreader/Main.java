@@ -51,6 +51,7 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 800, 600));
         // We set the filePathTextField to the given argument
+        hoofdSchermController.init();
         hoofdSchermController.setFilePath(firstFileName);
 
         // We declare 'hoofdSchermController' as being the CardListener of our system.

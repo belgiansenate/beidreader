@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane id="filechooserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.senate.beidreader.controller.HoofdSchermController">
+<GridPane id="filechooserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.senate.beidreader.controller.HoofdSchermController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -19,7 +19,7 @@
    <children>
       <GridPane>
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" />
         </columnConstraints>
@@ -27,14 +27,14 @@
           <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MenuBar prefHeight="25.0" prefWidth="208.0">
+            <MenuBar prefHeight="32.0" prefWidth="42.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                         <MenuItem fx:id="newButton" mnemonicParsing="false" text="New" />
-                        <MenuItem fx:id="openButton" mnemonicParsing="false" text="Open" />
+                        <MenuItem fx:id="openButton" mnemonicParsing="false" onAction="#startFileChooser" text="Open" />
                         <MenuItem fx:id="saveButton" mnemonicParsing="false" text="Save" />
-                        <MenuItem fx:id="saveAsButton" mnemonicParsing="false" text="Save As" />
+                        <MenuItem fx:id="saveAsButton" mnemonicParsing="false" onAction="#startFileSaveChooser" text="Save As" />
                     <MenuItem fx:id="closeButton" mnemonicParsing="false" text="Close" />
                         <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#exitApplication" text="Exit" />
                   </items>
@@ -45,7 +45,7 @@
             <TextField fx:id="filePathTextField" editable="false" text="c:\home\wv\namen.csv" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <ListView editable="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+      <ListView fx:id="cardHolderListView" editable="true" onMouseClicked="#cardHolderListViewItemClicked" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
       <GridPane GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" />

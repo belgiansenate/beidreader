@@ -18,19 +18,19 @@
             <version>4.11</version>
         </dependency>
 
-<dependency>
-	<groupId>com.zenjava</groupId>
-	<artifactId>javafx-maven-plugin</artifactId>
-	<version>8.1.2</version>
-</dependency>
+        <dependency>
+            <groupId>com.zenjava</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>8.1.2</version>
+        </dependency>
 
 
         <!-- De jEidlib-bibliotheek is NIET via een Maven-repository beschikbaar. -->
-		<!-- We kunnen wel de software downloaden: https://code.google.com/p/eidlib/ -->
-		<!-- Hier staat de Java-native bibliotheek onde downloads -->
-		<!-- We zien twee versies van jar-files: jEidlib.jar en jEidlib_1.1.jar -->
-		<!-- We zullen ze respectievelijk versies 1.0 en 1.1 noemen -->
-		<!-- We installeren ze dus in onze lokale svn-repository respectievelijk met de commando's: -->
+        <!-- We kunnen wel de software downloaden: https://code.google.com/p/eidlib/ -->
+        <!-- Hier staat de Java-native bibliotheek onde downloads -->
+        <!-- We zien twee versies van jar-files: jEidlib.jar en jEidlib_1.1.jar -->
+        <!-- We zullen ze respectievelijk versies 1.0 en 1.1 noemen -->
+        <!-- We installeren ze dus in onze lokale svn-repository respectievelijk met de commando's: -->
         <!--        mvn install:install-file -Dfile=jEidlib.jar -DgroupId=be.belgium.eid -DartifactId=jEidlib -Dversion=1.0 -Dpackaging=jar -->
         <!--        mvn install:install-file -Dfile=jEidlib_1.1.jar -DgroupId=be.belgium.eid -DartifactId=jEidlib -Dversion=1.1 -Dpackaging=jar -->
         <dependency>
