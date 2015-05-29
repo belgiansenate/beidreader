@@ -12,7 +12,9 @@ import be.belgium.eid.objects.IDPhoto;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -239,8 +241,15 @@ public class CardHolder {
         this.firstName = voornamen1[0];
         this.middleName = (voornamen1.length > 1 ) ? voornamen1[1] : "";
         String voornaam3 = idData.get3rdFirstname();
+        String nationality = idData.getNationality();
+        this.country = nationality;
         String rrn = idData.getNationalNumber();
         this.regNr = rrn;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String birthDate = simpleDateFormat.format(idData.getBirthDate());
+        this.birthDate = birthDate;
+        String sexe = String.valueOf(idData.getSex());
+        this.sexe = sexe;
         IDAddress idAddress = beID.getIDAddress();
         System.out.println("IDAddress gelezen...");
         String fullStreet = idAddress.getStreet();
