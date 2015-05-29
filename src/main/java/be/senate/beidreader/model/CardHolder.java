@@ -302,6 +302,44 @@ public class CardHolder {
         return csvString;
     }
 
+    public static CardHolder getInstanceFromCsv(String csvString) {
+        String[] components = csvString.split(",");
+        CardHolder cardHolder = new CardHolder();
+        if (components.length != 23) {
+            System.out.println((csvString.length() < 10) ? csvString : csvString.substring(0, 10) + "... :This csv-line has not the required number (23) of fields.");
+        } else {
+            cardHolder.regNr = normalizeString(components[1]);
+            cardHolder.country = normalizeString(components[2]);
+            cardHolder.firstName = normalizeString(components[3]);
+            cardHolder.middleName = normalizeString(components[4]);
+            cardHolder.lastName = normalizeString(components[5]);
+            cardHolder.language = normalizeString(components[6]);
+            cardHolder.function = normalizeString(components[7]);
+            cardHolder.picture = normalizeString(components[8]);
+            cardHolder.surName = normalizeString(components[9]);
+            cardHolder.name = normalizeString(components[10]);
+            cardHolder.extendedId = normalizeString(components[11]);
+            cardHolder.street = normalizeString(components[12]);
+            cardHolder.number = normalizeString(components[13]);
+            cardHolder.zipCode = normalizeString(components[14]);
+            cardHolder.city = normalizeString(components[15]);
+            cardHolder.adressCountry = normalizeString(components[16]);
+            cardHolder.birthDate = normalizeString(components[17]);
+            cardHolder.email = normalizeString(components[18]);
+            cardHolder.internalId = normalizeString(components[19]);
+            cardHolder.mobilePhone = normalizeString(components[20]);
+            cardHolder.officePhone = normalizeString(components[21]);
+            cardHolder.sexe = normalizeString(components[22]);
+        }
+        return cardHolder;
+    }
+
+    // This private methode is used to peel of quote's if they are present in the beginning and the end
+    private static String normalizeString(String rawString) {
+        String normalizedString = rawString.startsWith("\"") ? rawString.substring(1, rawString.length()-1) : rawString;
+        return normalizedString;
+    }
+
     @Override
     public String toString() {
         return regNr + " " + lastName + " " + firstName;

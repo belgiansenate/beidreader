@@ -4,7 +4,9 @@ import be.belgium.eid.eidlib.BeID;
 import be.belgium.eid.event.CardListener;
 import be.belgium.eid.exceptions.EIDException;
 import be.senate.beidreader.model.CardHolder;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +20,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javafx.scene.control.ListView;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.util.*;
 
 public class HoofdSchermController implements CardListener {
@@ -65,6 +65,7 @@ public class HoofdSchermController implements CardListener {
         this.filePathTextField.setText(filePath);
     }
 
+    // Methode that opens a filechooser, open the selected file en reads the content into the observable list of cardholders.
     public void startFileChooser(ActionEvent actionEvent) {
         System.out.println("Start fileChooser.");
         FileChooser fileChooser = new FileChooser();
@@ -79,10 +80,12 @@ public class HoofdSchermController implements CardListener {
         } else {
             String filename = file.getAbsolutePath();
             filePathTextField.setText(filename);
+            openFile(file);
         }
         return;
     }
 
+    // Method that starts a file-save-chooser and saves (using saveToFile) the content of the observable list of cardholders to file.
     public void startFileSaveChooser(ActionEvent actionEvent) {
         System.out.println("Start fileSaveChooser.");
         FileChooser fileChooser = new FileChooser();
@@ -102,7 +105,8 @@ public class HoofdSchermController implements CardListener {
         return;
     }
 
-    public void saveToFile(File file) {
+    // Methode that writes the observable list of cardholders to a given csv-file.
+    private void saveToFile(File file) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             PrintWriter printWriter = new PrintWriter(fileOutputStream);
@@ -114,6 +118,26 @@ public class HoofdSchermController implements CardListener {
             printWriter.close();
 //            fileOutputStream.close();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Methode that fills the observable list of cardholders, given a csv-file with entries
+    private void openFile(File file) {
+        try {
+            FileReader fileReader = new FileReader(file);
+            LineNumberReader lineNumberReader = new LineNumberReader(fileReader);
+            // So far, so good. We can reinitialize the observableList
+            this.cardHolderObservableList.clear();
+            String currentLine = null;
+            do {
+                currentLine = lineNumberReader.readLine();
+                if (currentLine != null) {
+                    CardHolder cardHolder = CardHolder.getInstanceFromCsv(currentLine);
+                    this.cardHolderObservableList.add(cardHolder);
+                }
+            } while (currentLine != null);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -138,7 +162,7 @@ public class HoofdSchermController implements CardListener {
         System.out.println("ListView item clicked; " + this.cardHolderListView.getFocusModel().getFocusedItem());
     }
 
-    public void showCardHolderAsCurrent(CardHolder cardHolder) {
+    private void showCardHolderAsCurrent(CardHolder cardHolder) {
         rrnTextField.setText(cardHolder.getRegNr());
         naamTextField.setText(cardHolder.getLastName());
         voornamenTextField.setText(cardHolder.getFirstName());
@@ -148,7 +172,7 @@ public class HoofdSchermController implements CardListener {
         this.beID = beID;
     }
 
-    public void refreshScreenDetail(CardHolder cardHolder) {
+    private void refreshScreenDetail(CardHolder cardHolder) {
         this.rrnTextField.setText(cardHolder.getRegNr());
         this.naamTextField.setText(cardHolder.getLastName());
         this.voornamenTextField.setText(cardHolder.getFirstName() + " " + cardHolder.getMiddleName());

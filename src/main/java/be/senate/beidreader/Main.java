@@ -48,7 +48,7 @@ public class Main extends Application {
         FXMLLoader hoofdSchermLoader = new FXMLLoader(getClass().getResource("hoofdScherm.fxml"));
         GridPane root = hoofdSchermLoader.load();
         HoofdSchermController hoofdSchermController = (HoofdSchermController)hoofdSchermLoader.getController();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("BeIDReader");
         primaryStage.setScene(new Scene(root, 800, 600));
         // We set the filePathTextField to the given argument
         hoofdSchermController.init();
