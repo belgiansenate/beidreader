@@ -45,13 +45,12 @@ public class Main extends Application {
         // As we need the controller afterwards we donot use the static methode of FXMLLoader (as below)...
         //        GridPane root = FXMLLoader.load(getClass().getResource("hoofdScherm.fxml"));
         // But we get an instance of FXMLLoader. We can ask this instance to get the controller
-        FXMLLoader hoofdSchermLoader = new FXMLLoader(getClass().getResource("hoofdScherm.fxml"));
+        FXMLLoader hoofdSchermLoader = new FXMLLoader(getClass().getResource("controller/hoofdScherm.fxml"));
         GridPane root = hoofdSchermLoader.load();
         HoofdSchermController hoofdSchermController = (HoofdSchermController)hoofdSchermLoader.getController();
         primaryStage.setTitle("BeIDReader");
         primaryStage.setScene(new Scene(root, 800, 600));
         // We set the filePathTextField to the given argument
-        hoofdSchermController.init();
         hoofdSchermController.setFilePath(firstFileName);
 
         // We declare 'hoofdSchermController' as being the CardListener of our system.

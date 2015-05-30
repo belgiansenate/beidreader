@@ -10,12 +10,17 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -42,6 +47,14 @@ public class HoofdSchermController implements CardListener {
     @FXML private Button upButton;
     @FXML private Button downButton;
 
+
+    // This method is automatically called by the 'load'-method of FMXLoader (see Main-class)
+    public void initialize() {
+        System.out.println("Initialize hoofdschermController");
+        init();
+    }
+
+    // I have put most initialisation here...
     public void init() {
         this.cardHolderObservableList = FXCollections.observableArrayList();
 //        final ListView<CardHolder> listView = new ListView<CardHolder>(this.cardHolderObservableList);
@@ -63,6 +76,10 @@ public class HoofdSchermController implements CardListener {
 
     public void setFilePath(String filePath) {
         this.filePathTextField.setText(filePath);
+    }
+
+    public void deleteButtonClicked(ActionEvent actionEvent) {
+        System.out.println("delete button clicked!");
     }
 
     // Methode that opens a filechooser, open the selected file en reads the content into the observable list of cardholders.
@@ -103,6 +120,24 @@ public class HoofdSchermController implements CardListener {
             saveToFile(file);
         }
         return;
+    }
+
+    public void helpMenuItemClicked(ActionEvent actionEvent) {
+        Stage helpSchermStage = new Stage();
+        FXMLLoader helpSchermLoader = new FXMLLoader(getClass().getResource("helpScherm.fxml"));
+        try {
+            Pane helpSchermPane = helpSchermLoader.load();
+            WebView webView = new WebView();
+            Scene helpSchermScene = new Scene(webView, 500, 500);
+
+
+            helpSchermStage.setScene(helpSchermScene);
+            helpSchermStage.show();
+            HelpSchermController helpSchermController = (HelpSchermController)helpSchermLoader.getController();
+            helpSchermController.loadWebPage("http://www.cerclebrugge.be");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Methode that writes the observable list of cardholders to a given csv-file.
