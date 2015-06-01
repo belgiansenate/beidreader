@@ -32,14 +32,14 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                        <MenuItem fx:id="newButton" mnemonicParsing="false" text="New" />
-                        <MenuItem fx:id="openButton" mnemonicParsing="false" onAction="#startFileChooser" text="Open" />
+                        <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="New" />
+                        <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#startFileChooser" text="Open" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="saveButton" mnemonicParsing="false" text="Save" />
-                        <MenuItem fx:id="saveAsButton" mnemonicParsing="false" onAction="#startFileSaveChooser" text="Save As" />
+                        <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveCurrentFile" text="Save" />
+                        <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#startFileSaveChooser" text="Save As" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem fx:id="closeButton" mnemonicParsing="false" text="Close" />
-                        <MenuItem fx:id="exitButton" mnemonicParsing="false" onAction="#exitApplication" text="Exit" />
+                    <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeMenuItemClicked" text="Close" />
+                        <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitApplication" text="Exit" />
                   </items>
                 </Menu>
               </menus>
@@ -114,7 +114,7 @@
          <children>
             <Button fx:id="upButton" disable="true" mnemonicParsing="false" onAction="#upButtonPushed" text="Up" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <Button fx:id="downButton" disable="true" mnemonicParsing="false" onAction="#downButtonPushed" text="Down" GridPane.halignment="CENTER" />
-            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteButtonPushed" text="Delete" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </children>

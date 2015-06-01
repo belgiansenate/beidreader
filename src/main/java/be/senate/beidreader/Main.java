@@ -52,6 +52,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 800, 600));
         // We set the filePathTextField to the given argument
         hoofdSchermController.setFilePath(firstFileName);
+        hoofdSchermController.openFile(firstFileName);
 
         // We declare 'hoofdSchermController' as being the CardListener of our system.
         BeID beID = new BeID(true);
