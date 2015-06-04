@@ -5,9 +5,33 @@
     <title></title>
 </head>
 <body>
-    <h1>Using the BeIDReader</h1>
-<p>This software helps to input EID-data into the PACXS-database.</p>
-<p>It is easy to use.</p>
+<h1>Using the BeIDReader</h1>
 
+<h2>Purpose:</h2>
+
+<p>This software reads EID-data from the EID-card and allows to add the data into a csv-file.
+    This csv-file can be imported into the PACXS-database by the use of the PACXS-software.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+    <li>A PC to which a (valid) Eid-cardreader is connected (and tested with the EIDViewer);</li>
+    <li>A Java Run-Time version 1.8.x</li>
+    <li>The given jar-file: BeIDReader-jar-with-dependencies.jar</li>
+</ul>
+<h2>Typical use-case</h2>
+<p>A (potential) cardholder presents himself with his EID-card to the officer. The officer reads the data of Eid-card, using BeIDReader,
+and adds it to the csv-file.</p>
+<p>From time to time the officer loads the csv-file into the PACXS-database using the PACXS-software.</p>
+<h2>Use:</h2>
+
+<p>The program can be started with the command:</p>
+<code>java -jar BeIDReader-jar-with-dependencies.jar &ltcsv-filename.csv&gt</code>
+<p>If the file exists, the contents is read and the file opened. Otherwise, we start with a fresh situation (new-file-to-be-saved).</p>
+<p>To read the data of an Eid-card, just enter the card into the reader and wait a little...</p>
+<p>As soon as the data appears on the screen it can be added to the existing list by pushing the button 'Add'.</p>
+<p>Entries can be deleted from this list as well.</p>
+<p>Of course, the file has to be 'saved' in order to keep the newly added data.</p>
+<p>Remark: The (BeIDReader)-software does not (yet?) check wether data of the same person is already present in the csv-file.
+It just adds the new information.</p>
 </body>
 </html>

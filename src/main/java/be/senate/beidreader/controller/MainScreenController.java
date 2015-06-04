@@ -4,29 +4,26 @@ import be.belgium.eid.eidlib.BeID;
 import be.belgium.eid.event.CardListener;
 import be.belgium.eid.exceptions.EIDException;
 import be.senate.beidreader.model.CardHolder;
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.*;
 
-public class HoofdSchermController implements CardListener {
+public class MainScreenController implements CardListener {
     final private static short STATE_NEW = 0;
     final private static short STATE_OPENED = 1;
     final private static short STATE_NEWCHANGED = 2;
@@ -38,8 +35,10 @@ public class HoofdSchermController implements CardListener {
     private HashMap<String, CardHolder> cardHolderHashMap;
     private ObservableList<CardHolder> cardHolderObservableList;
     private ObservableList<String> dummyList;
+    private String defaultDirectory = "";
 
     @FXML private Stage mainStage;
+    @FXML private GridPane rootGridPane;
     @FXML private TextField filePathTextField;
     @FXML private TextField rrnTextField;
     @FXML private TextField naamTextField;
@@ -47,8 +46,8 @@ public class HoofdSchermController implements CardListener {
     @FXML private ImageView pasfotoImageView;
     @FXML private ListView<CardHolder> cardHolderListView;
 //    @FXML private ListView<String> cardHolderListView;
-    @FXML private Button upButton;
-    @FXML private Button downButton;
+//    @FXML private Button upButton;
+    @FXML private Button addButton;
     @FXML private Button deleteButton;
 
     @FXML private MenuItem newMenuItem;
@@ -94,8 +93,7 @@ public class HoofdSchermController implements CardListener {
                 this.saveAsMenuItem.setDisable(true);
                 this.closeMenuItem.setDisable(true);
                 this.exitMenuItem.setDisable(false);
-                this.downButton.setDisable(true);
-                this.upButton.setDisable(true);
+                this.addButton.setDisable(true);
                 this.deleteButton.setDisable(true);
                 break;
             }
@@ -106,8 +104,7 @@ public class HoofdSchermController implements CardListener {
                 this.saveAsMenuItem.setDisable(true);
                 this.closeMenuItem.setDisable(false);
                 this.exitMenuItem.setDisable(false);
-                this.downButton.setDisable(true);
-                this.upButton.setDisable(true);
+                this.addButton.setDisable(true);
                 this.deleteButton.setDisable(true);
                 break;
             }
@@ -118,8 +115,7 @@ public class HoofdSchermController implements CardListener {
                 this.saveAsMenuItem.setDisable(false);
                 this.closeMenuItem.setDisable(false);
                 this.exitMenuItem.setDisable(false);
-                this.downButton.setDisable(true);
-                this.upButton.setDisable(true);
+                this.addButton.setDisable(true);
                 this.deleteButton.setDisable(true);
                 break;
             }
@@ -130,8 +126,7 @@ public class HoofdSchermController implements CardListener {
                 this.saveAsMenuItem.setDisable(false);
                 this.closeMenuItem.setDisable(false);
                 this.exitMenuItem.setDisable(false);
-                this.downButton.setDisable(true);
-                this.upButton.setDisable(true);
+                this.addButton.setDisable(true);
                 this.deleteButton.setDisable(true);
                 break;
             }
@@ -145,7 +140,17 @@ public class HoofdSchermController implements CardListener {
     }
 
     public void setFilePath(String filePath) {
-        this.filePathTextField.setText(filePath);
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                this.defaultDirectory = filePath;
+            } else {
+                this.defaultDirectory = file.getParent();
+            }
+            this.filePathTextField.setText(filePath);
+        } else {
+            this.filePathTextField.setText("");
+        }
     }
 
     public void deleteButtonPushed(ActionEvent actionEvent) {
@@ -166,15 +171,19 @@ public class HoofdSchermController implements CardListener {
         FileChooser fileChooser = new FileChooser();
         String currentFileName = filePathTextField.getText();
         File currentFile = new File(currentFileName);
-        File directory = currentFile.getParentFile();
-        fileChooser.setInitialDirectory(directory);
-        fileChooser.setInitialFileName("Voornaam.txt");
+        if (currentFile.exists()) {  // In which case the parent-directory also exists.
+            File directory = currentFile.getParentFile();
+            fileChooser.setInitialDirectory(directory);
+        } else {
+            fileChooser.setInitialDirectory(new File(this.defaultDirectory));
+        }
         File file = fileChooser.showOpenDialog(mainStage);
         if (file == null) {
             filePathTextField.setText("");
         } else {
             String filename = file.getAbsolutePath();
             filePathTextField.setText(filename);
+            setFilePath(filename);
             openFile(file);
         }
         return;
@@ -186,16 +195,21 @@ public class HoofdSchermController implements CardListener {
         FileChooser fileChooser = new FileChooser();
         String currentFileName = filePathTextField.getText();
         File currentFile = new File(currentFileName);
-        File directory = currentFile.getParentFile();
-        fileChooser.setInitialDirectory(directory);
-        fileChooser.setInitialFileName("Voornaam.txt");
+        if (currentFile.exists()) {
+            File directory = currentFile.getParentFile();
+            fileChooser.setInitialDirectory(directory);
+        } else {
+            fileChooser.setInitialDirectory(new File(this.defaultDirectory));
+        }
+//            fileChooser.setInitialFileName("");
         File file = fileChooser.showSaveDialog(mainStage);
         if (file == null) {
             filePathTextField.setText("");
         } else {
+            saveToFile(file);
             String filename = file.getAbsolutePath();
             filePathTextField.setText(filename);
-            saveToFile(file);
+            setFilePath(filename);
         }
         return;
     }
@@ -220,16 +234,25 @@ public class HoofdSchermController implements CardListener {
 
     public void helpMenuItemClicked(ActionEvent actionEvent) {
         Stage helpSchermStage = new Stage();
-        FXMLLoader helpSchermLoader = new FXMLLoader(getClass().getResource("helpScherm.fxml"));
+        FXMLLoader helpSchermLoader = new FXMLLoader(getClass().getResource("helpScreen.fxml"));
         try {
             Pane helpSchermPane = helpSchermLoader.load();
-            HelpSchermController helpSchermController = (HelpSchermController)helpSchermLoader.getController();
-            Scene helpSchermScene = helpSchermController.getHelpWebScene();
+            HelpScreenController helpScreenController = (HelpScreenController)helpSchermLoader.getController();
+            Scene helpSchermScene = helpScreenController.getHelpWebScene();
             helpSchermStage.setScene(helpSchermScene);
             helpSchermStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void aboutMenuItemClicked(ActionEvent actionEvent) {
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setContentText("BeIDReader 1.0: (2015) wv@senate.be");
+//        alert.show();
+//        Node node = mainStage.getScene().getRoot();
+        if (this.rootGridPane == null) System.out.println("rootGridPane is null");
+       showNode(this.rootGridPane);
     }
 
     // Methode that writes the observable list of cardholders to a given csv-file.
@@ -300,11 +323,11 @@ public class HoofdSchermController implements CardListener {
             e.printStackTrace();
         }
     }
-    public void upButtonPushed(ActionEvent actionEvent){
-        System.out.println("Up button pushed");
-    }
+//    public void upButtonPushed(ActionEvent actionEvent){
+//        System.out.println("Up button pushed");
+//    }
 
-    public void downButtonPushed(ActionEvent actionEvent){
+    public void addButtonPushed(ActionEvent actionEvent){
         System.out.println("Down button pushed");
         this.cardHolderObservableList.add(this.currentCardHolder);
 //        this.cardHolderListView.setItems(this.cardHolderObservableList);
@@ -336,7 +359,7 @@ public class HoofdSchermController implements CardListener {
         this.naamTextField.setText("");
         this.voornamenTextField.setText("");
         this.pasfotoImageView.setImage(null);
-        this.downButton.setDisable(true);
+        this.addButton.setDisable(true);
         this.cardHolderObservableList = FXCollections.observableArrayList();
         this.cardHolderListView.setItems(this.cardHolderObservableList);
         this.state = STATE_NEW;
@@ -369,7 +392,7 @@ public class HoofdSchermController implements CardListener {
         try {
             this.currentCardHolder.readBeID(this.beID);
             refreshScreenDetail(this.currentCardHolder);
-            this.downButton.setDisable(false);
+            this.addButton.setDisable(false);
         } catch (EIDException e) {
             e.printStackTrace();
         }
@@ -384,7 +407,7 @@ public class HoofdSchermController implements CardListener {
         this.naamTextField.setText("");
         this.voornamenTextField.setText("");
         this.pasfotoImageView.setImage(null);
-        this.downButton.setDisable(true);
+        this.addButton.setDisable(true);
 
     }
 
@@ -396,5 +419,9 @@ public class HoofdSchermController implements CardListener {
             super.updateItem(item, empty);
             setText(item == null ? "" : item.getRegNr() + " " + item.getLastName() + " " + item.getFirstName());
         }
+    }
+
+    private void showNode(Node node) {
+        System.out.println(node.getClass().getName());
     }
 }

@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * Created by wv on 29/05/2015.
  */
-public class HelpSchermController {
+public class HelpScreenController {
     @FXML private WebView helpWebView;
     private WebEngine helpWebEngine;
     private Scene helpWebScene;
@@ -19,7 +19,7 @@ public class HelpSchermController {
         System.out.println("Initialize helpscherm controller.");
         this.helpWebView = new WebView();
         this.helpWebEngine = this.helpWebView.getEngine();
-        this.helpWebScene = new Scene(this.helpWebView, 400, 400);
+        this.helpWebScene = new Scene(this.helpWebView, 800, 800);
         getHelp();
     }
 

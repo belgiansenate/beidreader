@@ -241,7 +241,8 @@ public class CardHolder {
         this.firstName = voornamen1[0];
         this.middleName = (voornamen1.length > 1 ) ? voornamen1[1] : "";
         String voornaam3 = idData.get3rdFirstname();
-        String nationality = idData.getNationality();
+//        String nationality = idData.getNationality();   // I do not use this anymore. It returns 'Belg' or 'Belge' and not 'BE'.
+        String nationality = "BE";
         this.country = nationality;
         String rrn = idData.getNationalNumber();
         this.regNr = rrn;
