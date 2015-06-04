@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -35,10 +37,11 @@ public class Main extends Application {
         //        GridPane root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
         // But we get an instance of FXMLLoader. We can ask this instance to get the controller
         FXMLLoader hoofdSchermLoader = new FXMLLoader(getClass().getResource("controller/mainScreen.fxml"));
-        GridPane root = hoofdSchermLoader.load();
+        VBox root = hoofdSchermLoader.load();
         MainScreenController mainScreenController = (MainScreenController)hoofdSchermLoader.getController();
         primaryStage.setTitle("BeIDReader");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        double em = Font.getDefault().getSize(); // We try to size the screen according to the default fontsize
+        primaryStage.setScene(new Scene(root, em * 50.0, em * 41.67));
         // We set the filePathTextField to the given argument
         mainScreenController.setFilePath(firstFileName);
         mainScreenController.openFile(firstFileName);
