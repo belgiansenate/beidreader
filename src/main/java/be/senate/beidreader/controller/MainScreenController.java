@@ -247,12 +247,9 @@ public class MainScreenController implements CardListener {
     }
 
     public void aboutMenuItemClicked(ActionEvent actionEvent) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setContentText("BeIDReader 1.0: (2015) wv@senate.be");
-//        alert.show();
-//        Node node = mainStage.getScene().getRoot();
-        if (this.rootGridPane == null) System.out.println("rootGridPane is null");
-       showNode(this.rootGridPane);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("BeIDReader 1.0: (2015) wv@senate.be");
+        alert.show();
     }
 
     // Methode that writes the observable list of cardholders to a given csv-file.
@@ -419,9 +416,5 @@ public class MainScreenController implements CardListener {
             super.updateItem(item, empty);
             setText(item == null ? "" : item.getRegNr() + " " + item.getLastName() + " " + item.getFirstName());
         }
-    }
-
-    private void showNode(Node node) {
-        System.out.println(node.getClass().getName());
     }
 }
