@@ -36,12 +36,11 @@ public class Main extends Application {
         // As we need the controller afterwards we donot use the static methode of FXMLLoader (as below)...
         //        GridPane root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
         // But we get an instance of FXMLLoader. We can ask this instance to get the controller
-        FXMLLoader hoofdSchermLoader = new FXMLLoader(getClass().getResource("controller/newMainScreen.fxml"));
-//        GridPane root = hoofdSchermLoader.load();
+        FXMLLoader hoofdSchermLoader = new FXMLLoader(getClass().getResource("controller/mainScreen.fxml"));
         VBox root = hoofdSchermLoader.load();
         MainScreenController mainScreenController = (MainScreenController)hoofdSchermLoader.getController();
         primaryStage.setTitle("BeIDReader");
-        double em = Font.getDefault().getSize(); //
+        double em = Font.getDefault().getSize(); // We try to size the screen according to the default fontsize
         primaryStage.setScene(new Scene(root, em * 50.0, em * 41.67));
         // We set the filePathTextField to the given argument
         mainScreenController.setFilePath(firstFileName);
