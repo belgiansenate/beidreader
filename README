@@ -1,0 +1,26 @@
+BeIDReader: Tool for reading BeID-cards and creating a csv-file that can be imported into PACXS
+===============================================================================================
+
+Prerequisites:
+1) Java JDK 1.8.x
+2) Maven 3.x
+3) A valid BeID-reader (to be tested with Eid-viewer)
+
+How to install and use:
+1) Configure Maven properly.
+2) Start a cmd-tool and go to the top-directory (where the file pom.xml resides).
+Execute the following command:
+mvn package
+
+3) The first time it can take a while but you get a 'target'-directory where you find, amongst others, the following file:
+BeIDReader-jar-with-dependencies.jar
+
+This is your java-'executable'. You can execute it with the following command:
+java -jar BeIDReader-jar-with-dependencies.jar <startdirectory>
+
+The software has a help-page with more exaplanations.
+
+Enjoy yourselves,
+
+Wim Verhaest,
+ICT Senaat

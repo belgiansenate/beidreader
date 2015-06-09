@@ -25,18 +25,17 @@
         </dependency>
 
 
-        <!-- De jEidlib-bibliotheek is NIET via een Maven-repository beschikbaar. -->
-        <!-- We kunnen wel de software downloaden: https://code.google.com/p/eidlib/ -->
-        <!-- Hier staat de Java-native bibliotheek onde downloads -->
-        <!-- We zien twee versies van jar-files: jEidlib.jar en jEidlib_1.1.jar -->
-        <!-- We zullen ze respectievelijk versies 1.0 en 1.1 noemen -->
-        <!-- We installeren ze dus in onze lokale svn-repository respectievelijk met de commando's: -->
-        <!--        mvn install:install-file -Dfile=jEidlib.jar -DgroupId=be.belgium.eid -DartifactId=jEidlib -Dversion=1.0 -Dpackaging=jar -->
-        <!--        mvn install:install-file -Dfile=jEidlib_1.1.jar -DgroupId=be.belgium.eid -DartifactId=jEidlib -Dversion=1.1 -Dpackaging=jar -->
+       <!-- In previous versions, i used the jEidlib java-library -->
+        <!-- This software is not maintained and it has a free (MIT-)license, so I have downloaded -->
+        <!-- the source and i have included it in this software -->
+        <!-- All classes under package 'be.senate.belgium.*' are copied and refactored. -->
+        <!-- Before refactoring, they were to be found under 'be.belgium.*' -->
+        <!-- The jEidlib-software, in its turn, used the 'bouncycastle'-software for its encryption, decription and keys -->
+        <!-- I have included the Maven-dependency for this -->
         <dependency>
-            <groupId>be.senate</groupId>
-            <artifactId>jEidlib</artifactId>
-            <version>1.3</version>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15</artifactId>
+            <version>1.46</version>
         </dependency>
     </dependencies>
 

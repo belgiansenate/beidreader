@@ -1,11 +1,10 @@
 package be.senate.beidreader;
 
-import be.belgium.eid.eidlib.BeID;
+import be.senate.belgium.eid.eidlib.BeID;
 import be.senate.beidreader.controller.MainScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;

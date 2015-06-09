@@ -1,15 +1,14 @@
 package be.senate.beidreader.controller;
 
-import be.belgium.eid.eidlib.BeID;
-import be.belgium.eid.event.CardListener;
-import be.belgium.eid.exceptions.EIDException;
+import be.senate.belgium.eid.eidlib.BeID;
+import be.senate.belgium.eid.event.CardListener;
+import be.senate.belgium.eid.exceptions.EIDException;
 import be.senate.beidreader.model.CardHolder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;

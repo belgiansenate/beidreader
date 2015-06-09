@@ -4,18 +4,16 @@ package be.senate.beidreader.model;
  * Created by wv on 26/05/2015.
  */
 
-import be.belgium.eid.eidlib.BeID;
-import be.belgium.eid.exceptions.EIDException;
-import be.belgium.eid.objects.IDAddress;
-import be.belgium.eid.objects.IDData;
-import be.belgium.eid.objects.IDPhoto;
+import be.senate.belgium.eid.eidlib.BeID;
+import be.senate.belgium.eid.exceptions.EIDException;
+import be.senate.belgium.eid.objects.IDAddress;
+import be.senate.belgium.eid.objects.IDData;
+import be.senate.belgium.eid.objects.IDPhoto;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Calendar;
-import java.util.Objects;
 
 
 /**
