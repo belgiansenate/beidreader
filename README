@@ -16,9 +16,9 @@ mvn package
 BeIDReader-jar-with-dependencies.jar
 
 This is your java-'executable'. You can execute it with the following command:
-java -jar BeIDReader-jar-with-dependencies.jar <startdirectory>
+java -Dfile.encoding=UTF-8 -jar BeIDReader-jar-with-dependencies.jar <start-directory>
 
-The software has a help-page with more exaplanations.
+The software has a help-page with more explanations.
 
 Enjoy yourselves,
 
