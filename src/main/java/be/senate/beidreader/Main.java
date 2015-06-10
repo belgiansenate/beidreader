@@ -9,7 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.nio.charset.Charset;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
 
 public class Main extends Application {
 
@@ -24,9 +28,10 @@ public class Main extends Application {
 //            System.out.println(argumentIterator.next());
 //        }
         String[] args = argumentList.toArray(new String[0]);
-        if (args.length != 1) {
-            System.out.println("usage: java -jar BeIDReader-jar-with-dependencies.jar <filename>");
-            System.out.println("example: java -jar BeIDReader-jar-with-dependencies.jar c:\\home\\senatoren.csv");
+        Charset defaultCharset = Charset.defaultCharset();
+        if ((args.length != 1) || !(defaultCharset.equals(Charset.forName("UTF-8")))) { // We testen zowel op aantal argumenten als de Charset van de Java VM
+            System.out.println("usage: java -Dfile.encoding=UTF-8 -jar BeIDReader-jar-with-dependencies.jar <filename>");
+            System.out.println("example: java -Dfile.encoding=UTF-8 -jar BeIDReader-jar-with-dependencies.jar c:\\home\\senatoren.csv");
             System.exit(-1);
         }
         String firstFileName = args[0];

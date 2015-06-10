@@ -226,6 +226,7 @@ public class CardHolder {
     }
 
     public void setSexe(String sexe) {
+        if ("V".equals(sexe)) sexe = "F"; // Especially for dutch-speaking ladies...
         this.sexe = sexe;
     }
 

@@ -25,12 +25,14 @@ and adds it to the csv-file.</p>
 <h2>Use:</h2>
 
 <p>The program can be started with the command:</p>
-<code>java -jar BeIDReader-jar-with-dependencies.jar &ltcsv-filename.csv&gt</code>
+<code>java Dfile.encoding=UTF-8 -jar BeIDReader-jar-with-dependencies.jar &ltcsv-filename.csv&gt</code>
 <p>If the file exists, the contents is read and the file opened. Otherwise, we start with a fresh situation (new-file-to-be-saved).</p>
 <p>To read the data of an Eid-card, just enter the card into the reader and wait a little...</p>
 <p>As soon as the data appears on the screen it can be added to the existing list by pushing the button 'Add'.</p>
 <p>Entries can be deleted from this list as well.</p>
 <p>Of course, the file has to be 'saved' in order to keep the newly added data.</p>
+<p>It is necessary to tell the Java VM that the default file encoding must be UTF-8. PACXS expects it
+    but the Eid-middleware only converts bytes to Strings according to the default Charset.</p>
 <p>Remark: The (BeIDReader)-software does not (yet?) check wether data of the same person is already present in the csv-file.
 It just adds the new information.</p>
 </body>

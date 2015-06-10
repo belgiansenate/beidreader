@@ -247,7 +247,7 @@ public class MainScreenController implements CardListener {
 
     public void aboutMenuItemClicked(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("BeIDReader 1.0: (2015) wv@senate.be");
+        alert.setContentText("BeIDReader 1.1: (2015) wv@senate.be");
         alert.show();
     }
 
@@ -255,7 +255,8 @@ public class MainScreenController implements CardListener {
     private void saveToFile(File file) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            PrintWriter printWriter = new PrintWriter(fileOutputStream);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
+            PrintWriter printWriter = new PrintWriter(outputStreamWriter);
             Iterator<CardHolder> cardHolderIterator = this.cardHolderObservableList.iterator();
             while (cardHolderIterator.hasNext()) {
                 CardHolder cardHolder = cardHolderIterator.next();
@@ -267,14 +268,17 @@ public class MainScreenController implements CardListener {
 //            fileOutputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
     // Methode that fills the observable list of cardholders, given a csv-file with entries
     private void openFile(File file) {
         try {
-            FileReader fileReader = new FileReader(file);
-            LineNumberReader lineNumberReader = new LineNumberReader(fileReader);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+            LineNumberReader lineNumberReader = new LineNumberReader(inputStreamReader);
             // So far, so good. We can reinitialize the observableList
             this.cardHolderObservableList.clear();
             String currentLine = null;
@@ -296,8 +300,9 @@ public class MainScreenController implements CardListener {
     // Methode that fills the observable list of cardholders, given the filename of a csv-file with entries
     public void openFile(String fileName) {
         try {
-            FileReader fileReader = new FileReader(fileName);
-            LineNumberReader lineNumberReader = new LineNumberReader(fileReader);
+            FileInputStream fileInputStream = new FileInputStream(fileName);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+            LineNumberReader lineNumberReader = new LineNumberReader(inputStreamReader);
             // So far, so good. We can reinitialize the observableList
             this.cardHolderObservableList.clear();
             String currentLine = null;
