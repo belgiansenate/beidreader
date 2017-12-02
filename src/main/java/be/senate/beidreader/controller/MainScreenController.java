@@ -1,8 +1,14 @@
 package be.senate.beidreader.controller;
 
-import be.senate.belgium.eid.eidlib.BeID;
-import be.senate.belgium.eid.event.CardListener;
-import be.senate.belgium.eid.exceptions.EIDException;
+import be.fedict.commons.eid.client.BeIDCard;
+import be.fedict.commons.eid.client.FileType;
+import be.fedict.commons.eid.client.event.BeIDCardEventsListener;
+//import be.senate.belgium.eid.eidlib.BeID;
+//import be.senate.belgium.eid.event.CardListener;
+//import be.senate.belgium.eid.exceptions.EIDException;
+import be.fedict.commons.eid.consumer.BeIDIntegrity;
+import be.fedict.commons.eid.consumer.CardData;
+import be.fedict.commons.eid.consumer.Identity;
 import be.senate.beidreader.model.CardHolder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,17 +25,21 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.smartcardio.CardException;
+import javax.smartcardio.CardTerminal;
 import java.io.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.*;
 
-public class MainScreenController implements CardListener {
+public class MainScreenController implements BeIDCardEventsListener {
     final private static short STATE_NEW = 0;
     final private static short STATE_OPENED = 1;
     final private static short STATE_NEWCHANGED = 2;
     final private static short STATE_OPENEDCHANGED = 3;
 
     private short state = STATE_NEW; // Initial state
-    private BeID beID;
+//    private BeID beID;
     private CardHolder currentCardHolder;
     private HashMap<String, CardHolder> cardHolderHashMap;
     private ObservableList<CardHolder> cardHolderObservableList;
@@ -374,9 +384,9 @@ public class MainScreenController implements CardListener {
         voornamenTextField.setText(cardHolder.getFirstName());
     }
 
-    public void setBeID(BeID beID) {
-        this.beID = beID;
-    }
+//    public void setBeID(BeID beID) {
+//        this.beID = beID;
+//    }
 
     private void refreshScreenDetail(CardHolder cardHolder) {
         this.rrnTextField.setText(cardHolder.getRegNr());
@@ -386,22 +396,67 @@ public class MainScreenController implements CardListener {
         this.pasfotoImageView.setImage(image);
     }
 
+//    @Override
+//    public void cardInserted() {
+//        System.out.println("Kaart ingebracht.");
+//        this.currentCardHolder = new CardHolder();
+//        try {
+//            this.currentCardHolder.readBeID(this.beID);
+//            refreshScreenDetail(this.currentCardHolder);
+//            this.addButton.setDisable(false);
+//        } catch (EIDException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+//
+//    @Override
+//    public void cardRemoved() {
+//        System.out.println("Kaart verwijderd.");
+//        this.currentCardHolder = null;
+//        this.rrnTextField.setText("");
+//        this.naamTextField.setText("");
+//        this.voornamenTextField.setText("");
+//        this.pasfotoImageView.setImage(null);
+//        this.addButton.setDisable(true);
+//
+//    }
+
     @Override
-    public void cardInserted() {
-        System.out.println("Kaart ingebracht.");
-        this.currentCardHolder = new CardHolder();
-        try {
-            this.currentCardHolder.readBeID(this.beID);
-            refreshScreenDetail(this.currentCardHolder);
-            this.addButton.setDisable(false);
-        } catch (EIDException e) {
-            e.printStackTrace();
-        }
+    public void eIDCardEventsInitialized() {
 
     }
 
     @Override
-    public void cardRemoved() {
+    public void eIDCardInserted(CardTerminal cardTerminal, BeIDCard beIDCard) {
+        System.out.println("Kaart ingebracht.");
+        try {
+            X509Certificate rrnCertificate = beIDCard.getRRNCertificate();
+            byte[] identityFile = beIDCard.readFile(FileType.Identity);
+//            byte[] addressFile = beIDCard.readFile(FileType.Address);
+            byte[] identitySignatureFile = beIDCard.readFile(FileType.IdentitySignature);
+//            byte[] addressSignatureFile = beIDCard.readFile(FileType.AddressSignature);
+            BeIDIntegrity beIDIntegrity = new BeIDIntegrity();
+            Identity identity = beIDIntegrity.getVerifiedIdentity(identityFile, identitySignatureFile, rrnCertificate);
+
+            System.out.println("Naam:" + identity.getName() + " " + identity.getFirstName());
+        } catch (CardException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    @Override
+    public void eIDCardRemoved(CardTerminal cardTerminal, BeIDCard beIDCard) {
         System.out.println("Kaart verwijderd.");
         this.currentCardHolder = null;
         this.rrnTextField.setText("");
@@ -409,7 +464,6 @@ public class MainScreenController implements CardListener {
         this.voornamenTextField.setText("");
         this.pasfotoImageView.setImage(null);
         this.addButton.setDisable(true);
-
     }
 
     // This (inner)-class is used to 'present' a CardHolder within the ListView as a string

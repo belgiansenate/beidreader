@@ -1,6 +1,7 @@
 package be.senate.beidreader;
 
-import be.senate.belgium.eid.eidlib.BeID;
+import be.fedict.commons.eid.client.BeIDCardManager;
+//import be.senate.belgium.eid.eidlib.BeID;
 import be.senate.beidreader.controller.MainScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -51,9 +52,12 @@ public class Main extends Application {
         mainScreenController.openFile(firstFileName);
 
         // We declare 'mainScreenController' as being the CardListener of our system.
-        BeID beID = new BeID(true);
-        mainScreenController.setBeID(beID);
-        beID.enableCardListener(mainScreenController);
+        BeIDCardManager beIDCardManager = new BeIDCardManager();
+        beIDCardManager.addBeIDCardEventListener(mainScreenController);
+        beIDCardManager.start();
+//        BeID beID = new BeID(true);
+//        mainScreenController.setBeID(beID);
+//        beID.enableCardListener(mainScreenController);
 
 
 

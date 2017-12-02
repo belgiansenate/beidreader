@@ -4,11 +4,11 @@ package be.senate.beidreader.model;
  * Created by wv on 26/05/2015.
  */
 
-import be.senate.belgium.eid.eidlib.BeID;
-import be.senate.belgium.eid.exceptions.EIDException;
-import be.senate.belgium.eid.objects.IDAddress;
-import be.senate.belgium.eid.objects.IDData;
-import be.senate.belgium.eid.objects.IDPhoto;
+//import be.senate.belgium.eid.eidlib.BeID;
+//import be.senate.belgium.eid.exceptions.EIDException;
+//import be.senate.belgium.eid.objects.IDAddress;
+//import be.senate.belgium.eid.objects.IDData;
+//import be.senate.belgium.eid.objects.IDPhoto;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -230,50 +230,50 @@ public class CardHolder {
         this.sexe = sexe;
     }
 
-    public void readBeID(BeID beID) throws EIDException {
-        IDData idData = beID.getIDData();
-        System.out.println("IDData gelezen...");
-        String naam = idData.getName();
-        this.lastName = naam;
-        String voornaam1 = idData.get1stFirstname();
-        String[] voornamen1 = voornaam1.split(" ");
-        this.firstName = voornamen1[0];
-        this.middleName = (voornamen1.length > 1 ) ? voornamen1[1] : "";
-        String voornaam3 = idData.get3rdFirstname();
-//        String nationality = idData.getNationality();   // I do not use this anymore. It returns 'Belg' or 'Belge' and not 'BE'.
-        String nationality = "BE";
-        this.country = nationality;
-        String rrn = idData.getNationalNumber();
-        this.regNr = rrn;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String birthDate = simpleDateFormat.format(idData.getBirthDate());
-        this.birthDate = birthDate;
-        String sexe = String.valueOf(idData.getSex());
-        this.sexe = sexe;
-        IDAddress idAddress = beID.getIDAddress();
-        System.out.println("IDAddress gelezen...");
-        String fullStreet = idAddress.getStreet();
-        String[] streetParts = fullStreet.split(" ");
-        if (streetParts.length <= 1) {
-            this.street = fullStreet;
-        } else {
-            this.number = streetParts[streetParts.length - 1];
-            this.street = streetParts[0];
-            if (streetParts.length > 2) {
-                for (int i = 1; i < streetParts.length - 1; i++)
-                    this.street = this.street + " " + streetParts[i];
-            }
-        }
-        this.city = idAddress.getMunicipality();
-        this.zipCode = idAddress.getZipCode();
-        IDPhoto idPhoto = beID.getIDPhoto();
-        System.out.println("IDPhoto gelezen...");
-        byte[] imageAsBytes = idPhoto.getPhoto();
-        System.out.println("getPhoto gedaan...");
-        Base64.Encoder encoder = Base64.getMimeEncoder(-1, new byte[0]);
-        this.picture = encoder.encodeToString(imageAsBytes);
-        return;
-    }
+//    public void readBeID(BeID beID) throws EIDException {
+//        IDData idData = beID.getIDData();
+//        System.out.println("IDData gelezen...");
+//        String naam = idData.getName();
+//        this.lastName = naam;
+//        String voornaam1 = idData.get1stFirstname();
+//        String[] voornamen1 = voornaam1.split(" ");
+//        this.firstName = voornamen1[0];
+//        this.middleName = (voornamen1.length > 1 ) ? voornamen1[1] : "";
+//        String voornaam3 = idData.get3rdFirstname();
+////        String nationality = idData.getNationality();   // I do not use this anymore. It returns 'Belg' or 'Belge' and not 'BE'.
+//        String nationality = "BE";
+//        this.country = nationality;
+//        String rrn = idData.getNationalNumber();
+//        this.regNr = rrn;
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String birthDate = simpleDateFormat.format(idData.getBirthDate());
+//        this.birthDate = birthDate;
+//        String sexe = String.valueOf(idData.getSex());
+//        this.sexe = sexe;
+//        IDAddress idAddress = beID.getIDAddress();
+//        System.out.println("IDAddress gelezen...");
+//        String fullStreet = idAddress.getStreet();
+//        String[] streetParts = fullStreet.split(" ");
+//        if (streetParts.length <= 1) {
+//            this.street = fullStreet;
+//        } else {
+//            this.number = streetParts[streetParts.length - 1];
+//            this.street = streetParts[0];
+//            if (streetParts.length > 2) {
+//                for (int i = 1; i < streetParts.length - 1; i++)
+//                    this.street = this.street + " " + streetParts[i];
+//            }
+//        }
+//        this.city = idAddress.getMunicipality();
+//        this.zipCode = idAddress.getZipCode();
+//        IDPhoto idPhoto = beID.getIDPhoto();
+//        System.out.println("IDPhoto gelezen...");
+//        byte[] imageAsBytes = idPhoto.getPhoto();
+//        System.out.println("getPhoto gedaan...");
+//        Base64.Encoder encoder = Base64.getMimeEncoder(-1, new byte[0]);
+//        this.picture = encoder.encodeToString(imageAsBytes);
+//        return;
+//    }
 
     public String toCsv() {
         String csvString = "CH" +

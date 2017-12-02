@@ -6,9 +6,18 @@
 
     <groupId>be.senate</groupId>
     <artifactId>BeIDReader</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
+    <repositories>
+        <repository>
+            <id>e-Contract.be</id>
+            <url>https://www.e-contract.be/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <dependencies>
 
@@ -32,11 +41,28 @@
         <!-- Before refactoring, they were to be found under 'be.belgium.*' -->
         <!-- The jEidlib-software, in its turn, used the 'bouncycastle'-software for its encryption, decription and keys -->
         <!-- I have included the Maven-dependency for this -->
+        <!-- Nu uitleg over commons-eid -->
+
+        <!--<dependency>-->
+            <!--<groupId>be.fedict.commons-eid</groupId>-->
+            <!--<artifactId>commons-eid-bom</artifactId>-->
+            <!--<version>0.7.1</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>import</scope>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15</artifactId>
-            <version>1.46</version>
+            <groupId>be.fedict.commons-eid</groupId>
+            <artifactId>commons-eid-client</artifactId>
+            <version>0.7.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>be.fedict.commons-eid</groupId>
+            <artifactId>commons-eid-consumer</artifactId>
+            <version>0.7.1</version>
+        </dependency>
+        
     </dependencies>
 
     <build>
