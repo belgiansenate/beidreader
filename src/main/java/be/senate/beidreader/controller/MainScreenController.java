@@ -6,6 +6,7 @@ import be.fedict.commons.eid.client.event.BeIDCardEventsListener;
 //import be.senate.belgium.eid.eidlib.BeID;
 //import be.senate.belgium.eid.event.CardListener;
 //import be.senate.belgium.eid.exceptions.EIDException;
+import be.fedict.commons.eid.consumer.Address;
 import be.fedict.commons.eid.consumer.BeIDIntegrity;
 import be.fedict.commons.eid.consumer.CardData;
 import be.fedict.commons.eid.consumer.Identity;
@@ -40,6 +41,8 @@ public class MainScreenController implements BeIDCardEventsListener {
 
     private short state = STATE_NEW; // Initial state
 //    private BeID beID;
+    private Identity identity;
+    private Address address;
     private CardHolder currentCardHolder;
     private HashMap<String, CardHolder> cardHolderHashMap;
     private ObservableList<CardHolder> cardHolderObservableList;
@@ -388,6 +391,14 @@ public class MainScreenController implements BeIDCardEventsListener {
 //        this.beID = beID;
 //    }
 
+    public void setIdentity (Identity identity) {
+        this.identity = identity;
+    }
+
+    public void setAddress (Address address) {
+        this.address = address;
+    }
+
     private void refreshScreenDetail(CardHolder cardHolder) {
         this.rrnTextField.setText(cardHolder.getRegNr());
         this.naamTextField.setText(cardHolder.getLastName());
@@ -430,29 +441,10 @@ public class MainScreenController implements BeIDCardEventsListener {
     @Override
     public void eIDCardInserted(CardTerminal cardTerminal, BeIDCard beIDCard) {
         System.out.println("Kaart ingebracht.");
-        try {
-            X509Certificate rrnCertificate = beIDCard.getRRNCertificate();
-            byte[] identityFile = beIDCard.readFile(FileType.Identity);
-//            byte[] addressFile = beIDCard.readFile(FileType.Address);
-            byte[] identitySignatureFile = beIDCard.readFile(FileType.IdentitySignature);
-//            byte[] addressSignatureFile = beIDCard.readFile(FileType.AddressSignature);
-            BeIDIntegrity beIDIntegrity = new BeIDIntegrity();
-            Identity identity = beIDIntegrity.getVerifiedIdentity(identityFile, identitySignatureFile, rrnCertificate);
-
-            System.out.println("Naam:" + identity.getName() + " " + identity.getFirstName());
-        } catch (CardException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-
-
+        this.currentCardHolder = new CardHolder();
+        this.currentCardHolder.readBeID(beIDCard);
+        refreshScreenDetail(this.currentCardHolder);
+        this.addButton.setDisable(false);
     }
 
     @Override

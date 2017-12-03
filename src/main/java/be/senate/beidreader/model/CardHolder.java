@@ -10,10 +10,22 @@ package be.senate.beidreader.model;
 //import be.senate.belgium.eid.objects.IDData;
 //import be.senate.belgium.eid.objects.IDPhoto;
 
+import be.fedict.commons.eid.client.BeIDCard;
+import be.fedict.commons.eid.client.FileType;
+import be.fedict.commons.eid.consumer.Address;
+import be.fedict.commons.eid.consumer.BeIDIntegrity;
+import be.fedict.commons.eid.consumer.Gender;
+import be.fedict.commons.eid.consumer.Identity;
+
+import javax.smartcardio.CardException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -274,6 +286,70 @@ public class CardHolder {
 //        this.picture = encoder.encodeToString(imageAsBytes);
 //        return;
 //    }
+
+    public void readBeID(BeIDCard beIDCard)  {
+        try {
+            X509Certificate rrnCertificate = beIDCard.getRRNCertificate();
+            byte[] identityFile = beIDCard.readFile(FileType.Identity);
+            byte[] identitySignatureFile = beIDCard.readFile(FileType.IdentitySignature);
+            byte[] addressFile = beIDCard.readFile(FileType.Address);
+            byte[] addressSignatureFile = beIDCard.readFile(FileType.AddressSignature);
+            byte[] foto = beIDCard.readFile(FileType.Photo);
+            BeIDIntegrity beIDIntegrity = new BeIDIntegrity();
+            Identity identity = beIDIntegrity.getVerifiedIdentity(identityFile, identitySignatureFile, foto, rrnCertificate);
+            Address address = beIDIntegrity.getVerifiedAddress(addressFile, identitySignatureFile, addressSignatureFile, rrnCertificate);
+
+            System.out.println("Naam:" + identity.getName() + " " + identity.getFirstName());
+            System.out.println(address.getStreetAndNumber());
+            String naam = identity.getName();
+            this.lastName = naam;
+            String voornaam1 = identity.getFirstName();
+            String[] voornamen1 = voornaam1.split(" ");
+            this.firstName = voornamen1[0];
+            this.middleName = (voornamen1.length > 1 ) ? voornamen1[1] : "";
+            String voornaam3 = identity.getMiddleName();
+//        String nationality = idData.getNationality();   // I do not use this anymore. It returns 'Belg' or 'Belge' and not 'BE'.
+            String nationality = "BE";
+            this.country = nationality;
+            String rrn = identity.getNationalNumber();
+            this.regNr = rrn;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            GregorianCalendar gregorianCalendar = identity.getDateOfBirth();
+            String birthDate = simpleDateFormat.format(gregorianCalendar.getTime());
+            this.birthDate = birthDate;
+//            String sexe = (identity.getGender() == Gender.MALE) ? "M" : "F";
+            String sexe = "M";
+            this.sexe = sexe;
+            String fullStreet = address.getStreetAndNumber();
+            String[] streetParts = fullStreet.split(" ");
+            if (streetParts.length <= 1) {
+                this.street = fullStreet;
+            } else {
+                this.number = streetParts[streetParts.length - 1];
+                this.street = streetParts[0];
+                if (streetParts.length > 2) {
+                    for (int i = 1; i < streetParts.length - 1; i++)
+                        this.street = this.street + " " + streetParts[i];
+                }
+            }
+            this.city = address.getMunicipality();
+            this.zipCode = address.getZip();
+            byte[] imageAsBytes = foto;
+            System.out.println("getPhoto gedaan...");
+            Base64.Encoder encoder = Base64.getMimeEncoder(-1, new byte[0]);
+            this.picture = encoder.encodeToString(imageAsBytes);
+
+        } catch (CardException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return;
+    }
 
     public String toCsv() {
         String csvString = "CH" +
