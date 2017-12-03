@@ -40,7 +40,6 @@ public class MainScreenController implements BeIDCardEventsListener {
     final private static short STATE_OPENEDCHANGED = 3;
 
     private short state = STATE_NEW; // Initial state
-//    private BeID beID;
     private Identity identity;
     private Address address;
     private CardHolder currentCardHolder;
@@ -81,17 +80,7 @@ public class MainScreenController implements BeIDCardEventsListener {
     // I have put most initialisation here...
     public void init() {
         this.cardHolderObservableList = FXCollections.observableArrayList();
-//        final ListView<CardHolder> listView = new ListView<CardHolder>(this.cardHolderObservableList);
-//        listView.setCellFactory(new Callback<ListView<CardHolder>, ListCell<CardHolder>>() {
-//            @Override public ListCell<CardHolder> call(ListView<CardHolder> list) {
-//                return new CardHolderFormatCell();
-//            }
-//        });
-//        this.cardHolderListView = listView;
-
         this.cardHolderListView.setItems(this.cardHolderObservableList);
-//        this.dummyList = FXCollections.observableArrayList();
-//        this.cardHolderListView.setItems(this.dummyList);
         this.state = STATE_NEW;
         reflectState();
     }
@@ -337,17 +326,11 @@ public class MainScreenController implements BeIDCardEventsListener {
             e.printStackTrace();
         }
     }
-//    public void upButtonPushed(ActionEvent actionEvent){
-//        System.out.println("Up button pushed");
-//    }
+
 
     public void addButtonPushed(ActionEvent actionEvent){
         System.out.println("Down button pushed");
         this.cardHolderObservableList.add(this.currentCardHolder);
-//        this.cardHolderListView.setItems(this.cardHolderObservableList);
-//        CardHolder ch = this.currentCardHolder;
-//        this.dummyList.add(ch.getRegNr() + " " + ch.getLastName() + " " + ch.getFirstName());
-//        this.cardHolderListView.setItems(this.dummyList);
         if (this.state == STATE_NEW)
             this.state = STATE_NEWCHANGED;
         else
@@ -387,9 +370,6 @@ public class MainScreenController implements BeIDCardEventsListener {
         voornamenTextField.setText(cardHolder.getFirstName());
     }
 
-//    public void setBeID(BeID beID) {
-//        this.beID = beID;
-//    }
 
     public void setIdentity (Identity identity) {
         this.identity = identity;
@@ -407,31 +387,6 @@ public class MainScreenController implements BeIDCardEventsListener {
         this.pasfotoImageView.setImage(image);
     }
 
-//    @Override
-//    public void cardInserted() {
-//        System.out.println("Kaart ingebracht.");
-//        this.currentCardHolder = new CardHolder();
-//        try {
-//            this.currentCardHolder.readBeID(this.beID);
-//            refreshScreenDetail(this.currentCardHolder);
-//            this.addButton.setDisable(false);
-//        } catch (EIDException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    @Override
-//    public void cardRemoved() {
-//        System.out.println("Kaart verwijderd.");
-//        this.currentCardHolder = null;
-//        this.rrnTextField.setText("");
-//        this.naamTextField.setText("");
-//        this.voornamenTextField.setText("");
-//        this.pasfotoImageView.setImage(null);
-//        this.addButton.setDisable(true);
-//
-//    }
 
     @Override
     public void eIDCardEventsInitialized() {

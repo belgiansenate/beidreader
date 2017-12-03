@@ -35,21 +35,10 @@
 
 
        <!-- In previous versions, i used the jEidlib java-library -->
-        <!-- This software is not maintained and it has a free (MIT-)license, so I have downloaded -->
-        <!-- the source and i have included it in this software -->
-        <!-- All classes under package 'be.senate.belgium.*' are copied and refactored. -->
-        <!-- Before refactoring, they were to be found under 'be.belgium.*' -->
-        <!-- The jEidlib-software, in its turn, used the 'bouncycastle'-software for its encryption, decription and keys -->
-        <!-- I have included the Maven-dependency for this -->
-        <!-- Nu uitleg over commons-eid -->
+        <!-- As the software isn't maintained anymore, it isn't able to read the most recent EID-cards. -->
+        <!-- Nowadays there is an Apache-project, see dependenncy's below -->
+        <!-- The code had to be adapted to use the new classes. -->
 
-        <!--<dependency>-->
-            <!--<groupId>be.fedict.commons-eid</groupId>-->
-            <!--<artifactId>commons-eid-bom</artifactId>-->
-            <!--<version>0.7.1</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>import</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>be.fedict.commons-eid</groupId>
