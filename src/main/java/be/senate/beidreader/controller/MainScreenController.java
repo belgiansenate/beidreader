@@ -249,7 +249,7 @@ public class MainScreenController implements BeIDCardEventsListener {
 
     public void aboutMenuItemClicked(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("BeIDReader 1.1: (2015) wv@senate.be");
+        alert.setContentText("BeIDReader 1.2: (2017) wv@senate.be");
         alert.show();
     }
 
